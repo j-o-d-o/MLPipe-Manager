@@ -1,0 +1,5 @@
+--recursive
+--exit
+--timeout 10000
+--exclude build/smokeTests/**/*.js
+build/test/**/*.test.js
