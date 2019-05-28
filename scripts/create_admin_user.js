@@ -68,7 +68,6 @@ if (require.main === module) {
     // Connect to mongoose
     mongoose.Promise = global.Promise;
     mongoose.set('debug', false);
-    console.log(process.env.MONGODB_URI);
     const connection_url = process.env.NODE_ENV == "test" ? process.env.MONGODB_URI_TEST : process.env.MONGODB_URI;
     mongoose.connect(connection_url, { useNewUrlParser: true, useCreateIndex: true, }).then(() => {
         console.log("Connected to MongoDB Successfully");
