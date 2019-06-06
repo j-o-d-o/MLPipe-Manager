@@ -61,12 +61,6 @@ require("apiRequest/key/deleteKey").register();
 require("apiRequest/key/getPublicKey").register();
 require("apiRequest/key/getUserKeys").register();
 
-// Removed for now
-// require("apiRequest/server/cancelAwsSpotRequest").register();
-// require("apiRequest/server/createAwsSpotRequest").register();
-// require("apiRequest/server/getAwsSpotRequest").register();
-// require("apiRequest/server/getUserAwsSpotRequests").register();
-
 require("apiRequest/job/getToken").register();
 require("apiRequest/job/getJob").register();
 require("apiRequest/job/getJobs").register();
