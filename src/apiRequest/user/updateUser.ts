@@ -44,7 +44,9 @@ async function updateUser(req: Request, res: Response) {
     var user = req.bindings.user;
     user.name = req.body.user.name || user.name;
     user.email = req.body.user.email || user.email;
+    user.default_aws_config = req.body.user.default_aws_config || user.default_aws_config;
     user.email = user.email.toLowerCase();
+
     if(req.authuser.isAdmin() && req.body.user.role !== undefined) {
         user.role = req.body.user.role;
         user.token = jwt.sign({payload: user.email}, process.env.USER_TOKEN);
