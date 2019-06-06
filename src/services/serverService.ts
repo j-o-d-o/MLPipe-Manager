@@ -99,20 +99,10 @@ function _execCommands(conn: ssh2.Client, commands: string[]) {
                     console.log(' STDOUT: ' + data.toString().replace(/[\r|\n|\r\n]$/, ''));
                     streamData.push('STDOUT: ' + data);
                 }).stderr.on('data', data => {
-                    
-                    if(
-                        data.toString().match(/WARNING:/) ||  // Conda puts its Warnings on stderr...
-                        data.toString().match(/CPU Frequency/) ||  // Tensorflow infos in stderr
-                        data.toString().match(/XLA service/)  || // Tensorflow infos in stderr
-                        data.toString().match(/StreamExecutor/) // Tensorflow infos in stderr
-                    ) {
-                        console.log(' STDOUT: ' + data.toString().replace(/[\r|\n|\r\n]$/, ''));
-                        streamData.push('STDOUT: ' + data);
-                    }
-                    else {
-                        console.log('STDERR: ' + data.toString().replace(/[\r|\n|\r\n]$/, ''));
-                        reject([streamData, 'STDERR: ' + data.toString().replace(/[\r|\n|\r\n]$/, '')]);
-                    }
+                    // There is no rejecting on STDERR cause a lot of warnings or normal logs
+                    // are, for whatever reason, written to STDERR
+                    console.log(' STDERR: ' + data.toString().replace(/[\r|\n|\r\n]$/, ''));
+                    streamData.push('STDERR: ' + data);
                 });
             }
         });
