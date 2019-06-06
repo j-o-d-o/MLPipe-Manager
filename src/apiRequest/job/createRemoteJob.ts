@@ -4,6 +4,7 @@ import router from "router";
 import logger from "services/logger";
 import { isLoggedIn } from "services/authentication";
 import { dbError } from "services/errorHandler";
+import { cancelSpotRequest, terminateInstances, getInstanceId } from "services/awsService";
 import { connect, uploadFile, setupTraining, startTraining } from "services/serverService";
 import { Job, IJob } from "models/job.model";
 import { fileExists, isZip } from "middleware/customValidators";
@@ -145,10 +146,16 @@ async function _startTraining(
         );
         logger.info("JobId: " + jobId + " Training finished");
 
-        // TODO: Once an training is there... couldnt I close the connection, 
-        //       not sure how the much performance it costs to keep all of the 
-        //       connections open until the training is finished
-        // TODO: Terminate AWS if remote is aws instance
+        // Terminate AWS if remote is aws instance
+        if(remoteDetails.spot_request_id !== null && 
+           remoteDetails.spot_request_id !== undefined && 
+           remoteDetails.spot_request_id !== "") {
+            logger.info("JobId: " + jobId + " Cancel Spot request...");
+            const instanceId = await getInstanceId(remoteDetails.spot_request_id);
+            await cancelSpotRequest(remoteDetails.spot_request_id);
+            await terminateInstances([instanceId]);
+
+        }
     }
     catch (err) {
         // [0] = STDOUT stream as array, [1]: error string
@@ -183,6 +190,7 @@ async function createJobRemote(req: Request, res: Response) {
     job.creator = req.authuser._id;
 
     // Add job details for remote type
+    job.remote_details.spot_request_id = req.body.spot_request_id || null;
     job.remote_details.exec_path = req.body.exec_path;
     job.remote_details.config_path = req.body.config_path;
     job.remote_details.api_url = req.body.api_url;

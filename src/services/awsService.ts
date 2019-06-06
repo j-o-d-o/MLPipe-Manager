@@ -75,6 +75,20 @@ export async function terminateInstances(instanceIds: string[]): Promise<boolean
     }
 }
 
+export async function getInstanceId(spotRequestId: string): Promise<string> {
+    try {
+        const ec2 = new AWS.EC2();
+        const data = await ec2.describeSpotInstanceRequests({SpotInstanceRequestIds: [spotRequestId]}).promise();
+        // var instanceType = data.Reservations[0].Instances[0].InstanceType;
+        // var dns = data.Reservations[0].Instances[0].PublicDnsName;
+        const instanceId = data.SpotInstanceRequests[0].InstanceId;
+        return instanceId;
+    }
+    catch (err) {
+        throw err;
+    }
+}
+
 export async function getIPfromInstance(instanceId: string): Promise<string> {
     try {
         const ec2 = new AWS.EC2();
