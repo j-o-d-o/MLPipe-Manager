@@ -41,7 +41,7 @@ describe("AWS endpoint tests", () => {
         adminUserObj = await createAdminUser("_test_admin", "_test_admin@email.com", "1234");
     }); 
 
-    describe("/server/awsspotrequest", () => {
+    describe.skip("/server/awsspotrequest", () => {
         it("create - not authorized", async () => {
             const res = await chai.request(app)
                 .post(process.env.API_PREFIX + "/server/awsspotrequest")
@@ -72,7 +72,7 @@ describe("AWS endpoint tests", () => {
         });
     });
 
-    describe("/server/awsspotrequest/:awsspotrequest", () => {
+    describe.skip("/server/awsspotrequest/:awsspotrequest", () => {
         it("get - not authorized", async () => {
             const res = await chai.request(app)
                 .get(process.env.API_PREFIX + "/server/awsspotrequest/" + awsSpotRequest._id);
