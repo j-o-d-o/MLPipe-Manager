@@ -13,7 +13,7 @@
         "build": "npm run tslint && tsc",
         "tslint": "tslint -c tslint.json -p tsconfig.json",
         "kill-port": "kill $(lsof -t -i:4000);",
-        "test": "tsc && nyc mocha",
+        "test": "tsc && nyc --reporter=lcov --reporter=text-summary mocha",
         "test-single": "tsc && cross-env NODE_ENV=test mocha build/test/smokeTests/remoteTraining.test.js --no-opts --exit"
     },
     "_moduleDirectories": [
