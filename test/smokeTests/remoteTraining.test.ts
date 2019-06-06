@@ -42,7 +42,7 @@ let trainingId: any;
 
 const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 
-describe("AWS endpoint tests", () => {
+describe("Smoke Test Remote", () => {
     before( async () => {
         await User.deleteMany({});
         await Key.deleteMany({});
