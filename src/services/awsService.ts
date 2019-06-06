@@ -1,6 +1,6 @@
-// require('dotenv').config();
 // Load the AWS SDK for Node.js
 import AWS from "aws-sdk";
+import { DescribeSpotInstanceRequestsResult } from "aws-sdk/clients/ec2";
 AWS.config.apiVersion = '2016-11-15';
 
 
@@ -39,6 +39,7 @@ export async function createSpotInstance(params: AWS.EC2.Types.RequestSpotInstan
 }
 
 export async function cancelSpotRequest(spotRequestId: string): Promise<boolean> {
+    // Note that it does not termiante the associated instances with the spot request!
     try {
         const ec2 = new AWS.EC2();
         await ec2.cancelSpotInstanceRequests({ SpotInstanceRequestIds: [spotRequestId] }).promise();
@@ -86,5 +87,15 @@ export async function getIPfromInstance(instanceId: string): Promise<string> {
     catch (err) {
         throw err;
     }
+}
 
+export async function getSpotRequests(params: any): Promise<DescribeSpotInstanceRequestsResult> {
+    try {
+        const ec2 = new AWS.EC2();
+        const data = await ec2.describeSpotInstanceRequests(params).promise();
+        return data;
+    }
+    catch (err) {
+        throw err;
+    }
 }
