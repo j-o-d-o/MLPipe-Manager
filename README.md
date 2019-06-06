@@ -9,13 +9,13 @@ The MLPipe system also provides a lightwight python package to send your Keras/T
 
 ## The Features
 
-- User Managment with Developer and Admin roles
 - Manage trainings of Machine Learning models (Tensorflow/Keras)
 - Create and manage keys to automatically connect to cloud services
-- Create and train on AWS Spot instances. No more up- and downloading of training code, data or results:
-  - Automize Spot instance creation via AWS javascript API
+- Train on remote machines (e.g. AWS instances)
+  - Automatically terminate spot requests after training
   - Automize uploading training code and execution
   - Get results automatically back via the MLPipe-Manager API endpoints
+- User Managment with Developer and Admin roles
 
 ## Getting started
 
@@ -24,7 +24,8 @@ The MLPipe system also provides a lightwight python package to send your Keras/T
 - If you have not yet, install MongoDB. Docu [here](https://github.com/j-o-d-o/MLPipe-Manager/docs/install_mongodb.md)
 - Make a copy of the .env.template file, rename it to .env and adjust the fields: `MONGODB_URI, MONGODB_URI_TEST, USER_TOKEN`
 
-### Setup AWS credentials
+### Setup AWS credentials (optinal)
+Note: This is optional in case you want to terminate AWS spot requests automatically after training is finished</br></br>
 Create the file `~/.aws/credentials` (Linux/Mac) or `C:\Users\USERNAME\.aws\credentials` (Windows) with this content:
 ```ini
 [default]
