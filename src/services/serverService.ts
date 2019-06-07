@@ -96,6 +96,9 @@ function _execCommands(conn: ssh2.Client, commands: string[]) {
                 stream.on('close', () => {
                     resolve(streamData);
                 }).on('data', (data: any) => {
+                    // Need better error handling. Maybe check if string contains "[DATE] Error"
+                    // because these are error messages from the MLPipe Trainer
+                    // But only works if MLPipe Trainer is used... dont really want to be specific on that
                     console.log(' STDOUT: ' + data.toString().replace(/[\r|\n|\r\n]$/, ''));
                     streamData.push('STDOUT: ' + data);
                 }).stderr.on('data', data => {
