@@ -159,14 +159,12 @@ async function _startTraining(
     }
     catch (err) {
         // [0] = STDOUT stream as array, [1]: error string
-        console.log(err[1]);
-        logger.error("JobId: " + jobId + " Error on Starting Training", { error: err[1].toString() });
+        console.log(err);
+        logger.error("JobId: " + jobId + " Error on Starting Training", { error: err.toString() });
         try {
-            // Add the error to the stdout stream array to add it as a whole to the log of the job setup
-            err[0].push(err[1].toString());
             await Job.findOneAndUpdate(
                 {_id: jobId }, 
-                { $push: { setup_log: { $each: err[0] } }, $set: { in_error: true, is_finished: true }}
+                { $push: { setup_log: err.toString() }, $set: { in_error: true, is_finished: true }}
             );
         }
         catch (err) {
