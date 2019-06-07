@@ -18,7 +18,8 @@ export interface IJob extends Document {
 
     // This fields are only used if type = 1 (Remote)
     remote_details : {
-        spot_request_id: string,
+        aws_spot_request_id: string,
+        aws_instance_id: string,
         exec_path: string,
         config_path: string,
         api_url: string,
@@ -48,7 +49,8 @@ const jobSchema = new Schema({
     type: {type: Number, required: true},
     trainings: [{type: Schema.Types.ObjectId, ref: 'training'}],
     remote_details : {
-        spot_request_id: {type: String, default: null},
+        aws_spot_request_id: {type: String, default: null},
+        aws_instance_id: {type: String, default: null},
         exec_path: {type: String, default: null},
         config_path: {type: String, default: null},
         api_url: {type: String, default: null},

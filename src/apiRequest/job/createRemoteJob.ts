@@ -4,7 +4,7 @@ import router from "router";
 import logger from "services/logger";
 import { isLoggedIn } from "services/authentication";
 import { dbError } from "services/errorHandler";
-import { cancelSpotRequest, terminateInstances, getInstanceId } from "services/awsService";
+import { cancelSpotRequest, terminateInstances } from "services/awsService";
 import { connect, uploadFile, setupTraining, startTraining } from "services/serverService";
 import { Job, IJob } from "models/job.model";
 import { fileExists, isZip } from "middleware/customValidators";
@@ -147,14 +147,12 @@ async function _startTraining(
         logger.info("JobId: " + jobId + " Training finished");
 
         // Terminate AWS if remote is aws instance
-        if(remoteDetails.spot_request_id !== null && 
-           remoteDetails.spot_request_id !== undefined && 
-           remoteDetails.spot_request_id !== "") {
-            logger.info("JobId: " + jobId + " Cancel Spot request...");
-            const instanceId = await getInstanceId(remoteDetails.spot_request_id);
-            await cancelSpotRequest(remoteDetails.spot_request_id);
-            await terminateInstances([instanceId]);
-
+        if(remoteDetails.aws_spot_request_id !== null && 
+           remoteDetails.aws_spot_request_id !== undefined && 
+           remoteDetails.aws_spot_request_id !== "") {
+            logger.info("JobId: " + jobId + " Cancel Spot request and Terminate Instances...");
+            await cancelSpotRequest(remoteDetails.aws_spot_request_id);
+            await terminateInstances([remoteDetails.aws_instance_id]);
         }
     }
     catch (err) {
@@ -188,7 +186,8 @@ async function createJobRemote(req: Request, res: Response) {
     job.creator = req.authuser._id;
 
     // Add job details for remote type
-    job.remote_details.spot_request_id = req.body.spot_request_id || null;
+    job.remote_details.aws_spot_request_id = req.body.aws_spot_request_id || null;
+    job.remote_details.aws_instance_id = req.body.aws_instance_id || null;
     job.remote_details.exec_path = req.body.exec_path;
     job.remote_details.config_path = req.body.config_path;
     job.remote_details.api_url = req.body.api_url;

@@ -42,7 +42,12 @@ export async function cancelSpotRequest(spotRequestId: string): Promise<boolean>
     // Note that it does not termiante the associated instances with the spot request!
     try {
         const ec2 = new AWS.EC2();
-        await ec2.cancelSpotInstanceRequests({ SpotInstanceRequestIds: [spotRequestId] }).promise();
+        if(spotRequestId.startsWith("sir")) {
+            await ec2.cancelSpotInstanceRequests({ SpotInstanceRequestIds: [spotRequestId] }).promise();
+        }
+        else {
+            await ec2.cancelSpotFleetRequests({ SpotFleetRequestIds: [spotRequestId], TerminateInstances: false }).promise();
+        }
         return true;
     }
     catch (err) {
@@ -69,20 +74,6 @@ export async function terminateInstances(instanceIds: string[]): Promise<boolean
         const ec2 = new AWS.EC2();
         await ec2.terminateInstances({InstanceIds: ids}).promise();
         return true;
-    }
-    catch (err) {
-        throw err;
-    }
-}
-
-export async function getInstanceId(spotRequestId: string): Promise<string> {
-    try {
-        const ec2 = new AWS.EC2();
-        const data = await ec2.describeSpotInstanceRequests({SpotInstanceRequestIds: [spotRequestId]}).promise();
-        // var instanceType = data.Reservations[0].Instances[0].InstanceType;
-        // var dns = data.Reservations[0].Instances[0].PublicDnsName;
-        const instanceId = data.SpotInstanceRequests[0].InstanceId;
-        return instanceId;
     }
     catch (err) {
         throw err;
