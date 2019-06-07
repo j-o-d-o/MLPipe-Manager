@@ -146,14 +146,18 @@ async function _startTraining(
         );
         logger.info("JobId: " + jobId + " Training finished");
 
-        // Terminate AWS if remote is aws instance
         if(remoteDetails.aws_spot_request_id !== null && 
            remoteDetails.aws_spot_request_id !== undefined && 
            remoteDetails.aws_spot_request_id !== "") {
-            logger.info("JobId: " + jobId + " Cancel Spot request and Terminate Instances...");
+            logger.info("JobId: " + jobId + " Cancel AWS Spot Request...");
             await cancelSpotRequest(remoteDetails.aws_spot_request_id);
-            await terminateInstances([remoteDetails.aws_instance_id]);
         }
+        if(remoteDetails.aws_instance_id !== null && 
+           remoteDetails.aws_instance_id !== undefined && 
+           remoteDetails.aws_instance_id !== "") {
+            logger.info("JobId: " + jobId + " Termiante AWS Instance...");
+            await terminateInstances([remoteDetails.aws_instance_id]);
+         }
     }
     catch (err) {
         // [0] = STDOUT stream as array, [1]: error string
