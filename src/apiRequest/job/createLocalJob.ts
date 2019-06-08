@@ -33,6 +33,7 @@ async function createLocalJob(req: Request, res: Response) {
     job.creator = req.authuser._id;
     job.name = req.body.name;
     job.description = req.body.description;
+    job.is_finished = true;
 
     const buffer = await crypto.randomBytes(32);
     job.token = buffer.toString('hex');
