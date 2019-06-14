@@ -70,5 +70,6 @@ require("apiRequest/job/createLocalJob").register();
 
 require("apiRequest/training/createTraining").register();
 require("apiRequest/training/getTraining").register();
+require("apiRequest/training/downloadModel").register();
 require("apiRequest/training/updateTraining").register();
 require("apiRequest/training/updateWeights").register();

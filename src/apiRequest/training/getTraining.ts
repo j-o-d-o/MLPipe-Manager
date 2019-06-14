@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import router from "router";
-import { isJobLoggedIn } from "services/authentication";
+import { isLoggedIn, isJobLoggedIn } from "services/authentication";
 import { bindTraining } from "middleware/bindings";
 
 
@@ -9,7 +9,7 @@ export function register() {
 }
 
 function auth(req: Request, res: Response, next: NextFunction) {
-    if(isJobLoggedIn(req)){
+    if(isLoggedIn(req) || isJobLoggedIn(req)){
         next();
     }
     else{
