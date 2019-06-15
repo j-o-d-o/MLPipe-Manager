@@ -5,7 +5,8 @@
 NodeJS server backend to distribute & manage Keras/Tensorflow trainings.
 </br></br>
 The MLPipe system also provides a lightwight python package to send your Keras/Tensorflow trainings to the backend. As well as a GUI that uses the MLPipe-Manager as backend.</br>
-[MLPipe-Trainer](https://github.com/j-o-d-o/MLPipe-Trainer)</br>[MLPipe-Viewer]()
+[MLPipe-Trainer](https://github.com/j-o-d-o/MLPipe-Trainer)</br>
+[MLPipe-Viewer](https://github.com/j-o-d-o/MLPipe-Viewer)
 
 ## The Features
 
