@@ -18,7 +18,7 @@
 
 process.env.NODE_ENV = "test";
 const PATH_TO_PRIVATE_KEY: string = "/home/jo/Documents/certs/localhost_ssh_key";
-const PATH_TO_ZIP_PRJ: string = "/home/jo/Desktop/projects/ts-server/test/testData/cifar-10_prj.zip"
+const PATH_TO_ZIP_PRJ: string = "/home/jo/Desktop/projects/MLPipe-Manager/test/testData/cifar-10_prj.zip"
 
 import { describe, it } from "mocha";
 import chai from "chai";
