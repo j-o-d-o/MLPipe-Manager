@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { valError } from "services/errorHandler";
-const { validationResult } = require('express-validator/check');
+const { validationResult } = require('express-validator');
 
 
 export function checkValidation(req: Request, res: Response, next: NextFunction) {

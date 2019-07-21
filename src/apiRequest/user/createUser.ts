@@ -8,7 +8,7 @@ import { checkValidation } from "middleware/checkValidation";
 
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
-const { check } = require('express-validator/check');
+const { check } = require('express-validator');
 
 
 export function register() {

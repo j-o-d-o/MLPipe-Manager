@@ -4,7 +4,7 @@ import { isJobLoggedIn } from "services/authentication";
 import { dbError } from "services/errorHandler";
 import { Training } from "models/training.model";
 import { checkValidation } from "middleware/checkValidation";
-const { check } = require('express-validator/check');
+const { check } = require('express-validator');
 
 
 export function register() {

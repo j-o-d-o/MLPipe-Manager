@@ -4,7 +4,7 @@ import { isLoggedIn } from "services/authentication";
 import { dbError } from "services/errorHandler";
 import { Job } from "models/job.model";
 import { checkValidation } from "middleware/checkValidation";
-const { check } = require("express-validator/check");
+const { check } = require("express-validator");
 const crypto = require('crypto');
 
 

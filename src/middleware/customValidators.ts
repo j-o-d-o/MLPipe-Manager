@@ -9,7 +9,8 @@ export async function isUniqueEmail(emailParam: string, userId: mongoose.Schema.
         const user: IUser = await User.findOne({email: new RegExp('^'+param+'$', 'i')});
         // is unique if either the user email is from the users own profile (_id.equals(userId))
         // or the user is empty
-        return !user || user._id.equals(userId);
+        if(!user || user._id.equals(userId)) return true;
+        throw new Error("Email is not unique");
     }
     catch (err) {
         throw err;
@@ -27,7 +28,8 @@ export async function isUniqueName(nameParam: string, userId: mongoose.Schema.Ty
         });
         // is unique if either the user name is from the users own profile (_id.equals(userId))
         // or the user is empty
-        return !user || user._id.equals(userId);
+        if(!user || user._id.equals(userId)) return true;
+        throw new Error("Name is not unique");
     }
     catch (err) {
         throw err;
@@ -47,11 +49,9 @@ export async function checkPwd(pwd: string, email: string) {
         if(user){
             // Check the password
             var hashedPwd = sha512(pwd, user.salt);
-            return hashedPwd == user.password;
+            if(hashedPwd == user.password) return true;
         }
-        else{
-            return false;
-        }
+        throw new Error("Password or User check failed")
     }
     catch (err) {
         throw err;
@@ -59,9 +59,11 @@ export async function checkPwd(pwd: string, email: string) {
 }
 
 export function fileExists(multerMetaData: any) {
-    return multerMetaData !== undefined;
+    if(multerMetaData !== undefined) return true;
+    throw new Error("file already exists");
 }
 
 export function isZip(multerMetaData: any) {
-    return multerMetaData !== undefined && multerMetaData.mimetype == "application/zip";
+    if(multerMetaData !== undefined && multerMetaData.mimetype == "application/zip") return true;
+    throw new Error("file is not a zip");
 }

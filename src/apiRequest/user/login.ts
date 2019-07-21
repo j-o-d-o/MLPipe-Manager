@@ -4,7 +4,7 @@ import { dbError } from "services/errorHandler";
 import { User } from "models/user.model";
 import { checkPwd } from "middleware/customValidators";
 import { checkValidation } from "middleware/checkValidation";
-const { check } = require('express-validator/check');
+const { check } = require('express-validator');
 
 
 export function register() {

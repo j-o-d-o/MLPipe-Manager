@@ -10,9 +10,8 @@ import { Job, IJob } from "models/job.model";
 import { fileExists, isZip } from "middleware/customValidators";
 import { Key } from "models/key.model";
 import { valError } from "services/errorHandler";
-const { validationResult } = require('express-validator/check');
 const crypto = require('crypto');
-const { check } = require('express-validator/check');
+const { check, validationResult } = require('express-validator');
 const multer = require('multer')
 const upload = multer({ dest: 'tmp/train_srcs/' });
 const fs = require('fs');

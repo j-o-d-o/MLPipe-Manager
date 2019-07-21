@@ -4,7 +4,7 @@ import { isLoggedIn } from "services/authentication";
 import { serverError, dbError } from "services/errorHandler";
 import { Key } from "models/key.model";
 import { checkValidation } from "middleware/checkValidation";
-const { check } = require('express-validator/check');
+const { check } = require('express-validator');
 const { generateKeyPair } = require('crypto');
 const sshpk = require('sshpk');
 

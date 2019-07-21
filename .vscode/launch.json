@@ -7,13 +7,14 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Mocha Tests",
+            "name": "Debug Tests",
             "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
             "env": {
                 "NODE_ENV": "test"
             },
             "args": [
                 "--colors",
+                // Input any test file you want to debug
                 "${workspaceFolder}/build/test/smokeTests/remoteTraining.test.js"
             ],
             "preLaunchTask": "tsc: build - tsconfig.json",
@@ -24,7 +25,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch Program",
+            "name": "Debug Program",
             "outputCapture": "std",
             "program": "${workspaceFolder}/build/src/server.js",
             "preLaunchTask": "tsc: build - tsconfig.json",

@@ -9,7 +9,6 @@ import mongoose from "mongoose";
 import router from "./router";
 import logger from "./services/logger";
 const getRawBody = require("raw-body");
-const expressVal = require("express-validator");
 const moment = require('moment-timezone');
 const morgan = require('morgan');
 
@@ -43,7 +42,6 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
-app.use(expressVal());
 
 app.use(function(req, res, next) {
     res.setHeader("Access-Control-Allow-Origin", "*");
