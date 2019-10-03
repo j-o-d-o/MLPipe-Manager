@@ -97,6 +97,10 @@ done
 ###########
 echo "$TRAIN_SRC"
 if [ -f ~/.bashrc ]; then
+    echo "[LOG]: source bash rc"
+    source ~/.bashrc
+fi
+if [ -f ~/.bash_profile ]; then
     echo "[LOG]: source bash profile"
     source ~/.bash_profile
 fi
