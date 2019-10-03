@@ -21,8 +21,10 @@ function auth(req: Request, res: Response, next: NextFunction) {
 
 function downloadModel(req: Request, res: Response) {
     let gridfsId = null;
+    const epoch: number = parseInt(req.params.epoch, 10);
+    const batch: number = parseInt(req.params.batch, 10);
     for(let i = 0; i < req.bindings.training.weights.length; ++i) {
-        if(gridfsId === null || (req.params.epoch <= req.bindings.training.weights[i].epoch && req.params.batch <= req.bindings.training.weights[i].batch)) {
+        if(gridfsId === null || (epoch <= req.bindings.training.weights[i].epoch && batch <= req.bindings.training.weights[i].batch)) {
             gridfsId = req.bindings.training.weights[i].model_gridfs;
         }
     }
