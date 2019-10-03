@@ -127,6 +127,6 @@ echo "[LOG]: Update the config file with job token and API url"
 sed -i "/^\[api_manager\]$/,/^\[/ s|^job_token=.*|job_token=$JOB_TOKEN|" $CONFIG_PATH
 sed -i "/^\[api_manager\]$/,/^\[/ s|^url=.*|url=$URL|" $CONFIG_PATH
 echo "[LOG]: In case Redis is available, start redis server"
-redis-server || true
+redis-server --daemonize yes || true
 
 echo "[LOG]: Setup successfull"
