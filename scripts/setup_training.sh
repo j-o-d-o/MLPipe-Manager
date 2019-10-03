@@ -2,7 +2,7 @@
 
 # this is needed as if called from node.js it wouldnt find the conda command
 # TODO: how can this be done without the user having to change the path by hand?
-# export PATH="$HOME/miniconda3/bin:$PATH"
+export PATH="$HOME/miniconda3/bin:$PATH"
 
 
 ##########
