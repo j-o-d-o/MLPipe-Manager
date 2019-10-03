@@ -30,7 +30,7 @@ if (process.env.NODE_ENV == "prod") {
 mongoose.Promise = global.Promise;
 mongoose.set('debug', false);
 const connection_url = process.env.NODE_ENV == "test" ? process.env.MONGODB_URI_TEST : process.env.MONGODB_URI;
-mongoose.connect(connection_url, { useNewUrlParser: true, useCreateIndex: true, }).then(() => {
+mongoose.connect(connection_url, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true }).then(() => {
     logger.info("Connected to MongoDB Successfully")
 }).catch((err) => {
     logger.error("Could not connect to MongoDB", { error: err });
