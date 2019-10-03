@@ -92,9 +92,9 @@ done
 ## START ##
 ###########
 echo "$TRAIN_SRC"
-if [ -f ~/.bashrc ]; then
-    echo "[LOG]: source bash rc"
-    source ~/.bashrc
+if [ -f ~/.bash_profile ]; then
+    echo "[LOG]: source bash profile"
+    source ~/.bash_profile
 fi
 cd ~
 echo "[LOG]: create source folder '~/$SRC_FOLDER' if it doesnt exists yet"
@@ -116,7 +116,7 @@ cd $JOB_ID/* || { exit 1; }
 echo "[LOG]: Export current directory to python path"
 export PYTHONPATH=$(pwd) || { exit 1; }
 echo "[LOG]: Setup conda environment"
-conda env update -f environment.yml
+conda env update -f environment.yml || { exit 1; }
 echo "[LOG]: activate conda env"
 conda activate $ENV || { exit 1; }
 echo "[LOG]: Update the config file with job token and API url"
