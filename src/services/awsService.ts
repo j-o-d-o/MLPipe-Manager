@@ -66,6 +66,20 @@ export async function stopInstance(instanceId: string): Promise<boolean> {
     }
 }
 
+export async function stopInstances(instanceIds: string[]): Promise<boolean> {
+    try {
+        // For some reason there is an issue with just taking the original array...
+        let ids: string[] = [];
+        instanceIds.forEach( id => { ids.push(id) });
+        const ec2 = new AWS.EC2();
+        await ec2.stopInstances({InstanceIds: ids}).promise();
+        return true;
+    }
+    catch (err) {
+        throw err;
+    }
+}
+
 export async function terminateInstances(instanceIds: string[]): Promise<boolean> {
     try {
         // For some reason there is an issue with just taking the original array...

@@ -4,7 +4,7 @@ import router from "router";
 import logger from "services/logger";
 import { isLoggedIn } from "services/authentication";
 import { dbError } from "services/errorHandler";
-import { cancelSpotRequest, terminateInstances } from "services/awsService";
+import { cancelSpotRequest, stopInstances } from "services/awsService";
 import { connect, uploadFile, setupTraining, startTraining } from "services/serverService";
 import { Job, IJob } from "models/job.model";
 import { fileExists, isZip } from "middleware/customValidators";
@@ -155,7 +155,7 @@ async function _startTraining(
            remoteDetails.aws_instance_id !== undefined && 
            remoteDetails.aws_instance_id !== "") {
             logger.info("JobId: " + jobId + " Termiante AWS Instance...");
-            await terminateInstances([remoteDetails.aws_instance_id]);
+            await stopInstances([remoteDetails.aws_instance_id]);
          }
     }
     catch (err) {
