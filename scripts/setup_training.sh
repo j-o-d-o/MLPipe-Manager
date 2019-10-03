@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# this is needed as if called from node.js it wouldnt find the conda command
-# TODO: how can this be done without the user having to change the path by hand?
-export PATH="$HOME/miniconda3/bin:$PATH"
-
 
 ##########
 ## HELP ##
@@ -99,10 +95,6 @@ echo "$TRAIN_SRC"
 if [ -f ~/.bashrc ]; then
     echo "[LOG]: source bash rc"
     source ~/.bashrc
-fi
-if [ -f ~/.bash_profile ]; then
-    echo "[LOG]: source bash profile"
-    source ~/.bash_profile
 fi
 cd ~
 echo "[LOG]: create source folder '~/$SRC_FOLDER' if it doesnt exists yet"
