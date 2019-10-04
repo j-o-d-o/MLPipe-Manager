@@ -40,7 +40,8 @@ mongoose.connect(connection_url, { useNewUrlParser: true, useCreateIndex: true, 
 // Setup Express App
 const app = express();
 
-app.use(bodyParser.urlencoded({ extended: true}));
+app.use(bodyParser.json({limit: '1000mb'}));
+app.use(bodyParser.urlencoded({limit: '1000mb', extended: true}));
 app.use(bodyParser.json());
 
 app.use(function(req, res, next) {
