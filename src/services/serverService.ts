@@ -55,6 +55,7 @@ export function setupTraining(
         config_path: string,
         api_url: string)
     {
+    // TODO: sanatize execPath & condaEnv for security reasons!
     const commands : string[] = [
         "cd ~",
         "bash setup_training.sh" +
@@ -76,7 +77,7 @@ export function startTraining(
         execPath: string,
         sourceFolder: string) 
     {
-    // TODO just execute setup_training.sh and wait...
+    // TODO: sanatize execPath & condaEnv for security reasons!
     const commands: string[] = [
         "source ~/.bash_profile",
         "cd ~/" + sourceFolder + "/" + jobId + "/*",

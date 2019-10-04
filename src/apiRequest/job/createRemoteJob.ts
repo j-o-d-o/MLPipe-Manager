@@ -135,7 +135,8 @@ async function _startTraining(
         // Start training on Remote server, no need to await here
         logger.info("JobId: " + jobId + " Start Training...");
 
-        // TODO: think about if errors in "startTraining" should be saved to the job, probably not?
+        // TODO: Think about to save this log also. Currently the log is updated from the MLPipe-Trainer app,
+        //       But that log might miss some things which are present in the streamDataArrTraining.
         await startTraining(
             connection, 
             jobId, 
