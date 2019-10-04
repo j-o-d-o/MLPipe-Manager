@@ -12,7 +12,7 @@ export interface IUser extends Document {
     password: string,
     token: string,
     is_active: boolean,
-    default_aws_config: AWS.EC2.Types.RequestSpotInstancesRequest,
+    default_job_data: object,
 
     keys: Array<Schema.Types.ObjectId | IKey>,
     updatedAt: mongoose.Schema.Types.Date,
@@ -30,7 +30,7 @@ const userSchema = new Schema({
     password: { type: String, required: true, select: false },
     token: { type: String, unique: true, required: true, select: false},
     is_active: { type: Boolean, select: false, default: false},
-    default_aws_config: {type: Object, default: null},
+    default_job_data: {type: Object, default: null},
 
     keys: [{type: Schema.Types.ObjectId, ref: 'keystore'}],
 },

@@ -15,7 +15,8 @@
             "args": [
                 "--colors",
                 // Input any test file you want to debug
-                "${workspaceFolder}/build/test/smokeTests/remoteTraining.test.js"
+                // "${workspaceFolder}/build/test/smokeTests/remoteTraining.test.js"
+                "${workspaceFolder}/build/test/endpoints/user.test.js"
             ],
             "preLaunchTask": "tsc: build - tsconfig.json",
             "outFiles": [

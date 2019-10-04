@@ -111,14 +111,34 @@ describe("user endpoint tests", () => {
         });
 
         it("update - success", async () => {
-            const updateName = { name: "_test_name_changed"};
+            const updateData = { 
+                name: "_test_name_changed",
+                default_job_data: {
+                    remote_details: {
+                        exec_path: "src/train.py",
+                    }
+                }
+            };
             const res = await chai.request(app)
                 .put(process.env.API_PREFIX + "/user/" + userObj._id)
                 .set("Authorization", "Bearer " + userObj.token)
-                .send({ user: updateName });
+                .send({ user: updateData });
             res.should.have.status(200);
-            res.body.name.should.equal(updateName.name);
+            res.body.name.should.equal(updateData.name);
             res.body.email.should.equal(userData.email);
+            res.body.default_job_data.remote_details.exec_path.should.equal(updateData.default_job_data.remote_details.exec_path);
+        });
+
+        it("reset default data - success", async () => {
+            const updateData = { 
+                default_job_data: {}
+            };
+            const res = await chai.request(app)
+                .put(process.env.API_PREFIX + "/user/" + userObj._id)
+                .set("Authorization", "Bearer " + userObj.token)
+                .send({ user: updateData });
+            res.should.have.status(200);
+            res.body.should.not.contain.key("default_job_data");
         });
     });
 

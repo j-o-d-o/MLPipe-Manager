@@ -44,7 +44,7 @@ async function updateUser(req: Request, res: Response) {
     var user = req.bindings.user;
     user.name = req.body.user.name || user.name;
     user.email = req.body.user.email || user.email;
-    user.default_aws_config = req.body.user.default_aws_config || user.default_aws_config;
+    user.default_job_data = req.body.user.default_job_data || user.default_job_data;
     user.email = user.email.toLowerCase();
 
     if(req.authuser.isAdmin() && req.body.user.role !== undefined) {
