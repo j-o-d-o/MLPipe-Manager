@@ -136,7 +136,7 @@ async function _startTraining(
         // Start training on Remote server, no need to await here
         logger.info("JobId: " + jobId + " Start Training...");
 
-        const streamDataArrTrainingLog = await startTraining(
+        const streamDataArrTrainingLog: any = await startTraining(
             connection, 
             jobId, 
             remoteDetails.conda_env, 
@@ -146,9 +146,14 @@ async function _startTraining(
         logger.info("JobId: " + jobId + " Training finished");
         // Find latest training and update its training log with streamDataArrTrainingLog
         try {
+            // Convert stream data from array to single string
+            var stringLog = ""
+            for (var line in streamDataArrTrainingLog) {
+                stringLog = line + '\n';
+            }
             await Training.findOneAndUpdate(
                 { jobId: jobId },
-                { log: streamDataArrTrainingLog },
+                { log: stringLog },
                 { sort: { 'createdAt': -1 } }
             );
         }
