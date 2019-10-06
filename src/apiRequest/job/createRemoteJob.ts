@@ -147,6 +147,7 @@ async function _startTraining(
         // Find latest training and update its training log with streamDataArrTrainingLog
         try {
             // Convert stream data from array to single string
+            console.log("Save training log...");
             var stringLog = ""
             for (var line in streamDataArrTrainingLog) {
                 stringLog = line + '\n';
