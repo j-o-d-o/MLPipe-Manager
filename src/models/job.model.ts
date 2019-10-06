@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document } from "mongoose";
 import { IUser } from "models/user.model";
-import { ITraining } from "models/training.model";
+import { Training, ITraining } from "models/training.model";
 import { IKey } from "models/key.model";
 
 
@@ -81,5 +81,9 @@ jobSchema.methods.hasTraining = function(trainingId: mongoose.Types.ObjectId) {
     return found;
 }
 
+jobSchema.pre<IJob>('remove', async function(next) {
+    await Training.deleteMany({'jobId': this._id}).exec();
+    next();
+});
 
 export const Job = mongoose.model<IJob>("job", jobSchema);

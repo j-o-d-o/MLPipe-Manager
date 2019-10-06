@@ -5,7 +5,7 @@ import chai from "chai";
 import chaiHttp from "chai-http";
 import mongoose from "mongoose";
 import app, { rootDirectory } from "../../src/server";
-import { User } from "models/user.model";
+import { User, IUser } from "models/user.model";
 import { Job, IJob } from "models/job.model";
 import { Training, ITraining } from "models/training.model";
 const createAdminUser = require("../../../scripts/create_admin_user");
@@ -17,6 +17,7 @@ chai.use(chaiHttp);
 
 
 let jobObj: IJob;
+let adminUserObj: IUser;
 let trainingObj: ITraining;
 let trainingData = {
     "name": "_Test-Training",
@@ -33,7 +34,7 @@ describe("Training endpoint tests", () => {
         await Training.deleteMany({});
 
         // create admin user
-        let adminUserObj = await createAdminUser("_test_admin", "_test_admin@email.com", "1234");
+        adminUserObj = await createAdminUser("_test_admin", "_test_admin@email.com", "1234");
 
         // create local job to update training to
         const res = await chai.request(app)
@@ -130,6 +131,16 @@ describe("Training endpoint tests", () => {
                 //res.should.have.status(200);
             });
         });
+    });
 
+    describe("/job/:job", () => {
+        // the main delete stuff is already testend in job.test.ts
+        // this is only a test if the pre hooks are working and the trainings are deleted with the job
+        it("delete training via job delete - success", async () => {
+            const res = await chai.request(app)
+                .delete(process.env.API_PREFIX + "/job/" + jobObj._id)
+                .set("authorization", "Bearer " + adminUserObj.token);
+            res.should.have.status(200);
+        });
     });
 });
