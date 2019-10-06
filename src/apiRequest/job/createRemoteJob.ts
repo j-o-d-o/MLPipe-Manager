@@ -7,6 +7,7 @@ import { dbError } from "services/errorHandler";
 import { cancelSpotRequest, stopInstances } from "services/awsService";
 import { connect, uploadFile, setupTraining, startTraining } from "services/serverService";
 import { Job, IJob } from "models/job.model";
+import { Training } from "models/training.model";
 import { fileExists, isZip } from "middleware/customValidators";
 import { Key } from "models/key.model";
 import { valError } from "services/errorHandler";
@@ -135,9 +136,7 @@ async function _startTraining(
         // Start training on Remote server, no need to await here
         logger.info("JobId: " + jobId + " Start Training...");
 
-        // TODO: Think about to save this log also. Currently the log is updated from the MLPipe-Trainer app,
-        //       But that log might miss some things which are present in the streamDataArrTraining.
-        await startTraining(
+        const streamDataArrTrainingLog = await startTraining(
             connection, 
             jobId, 
             remoteDetails.conda_env, 
@@ -145,6 +144,17 @@ async function _startTraining(
             source_folder
         );
         logger.info("JobId: " + jobId + " Training finished");
+        // Find latest training and update its training log with streamDataArrTrainingLog
+        try {
+            await Training.findOneAndUpdate(
+                { jobId: jobId },
+                { log: streamDataArrTrainingLog },
+                { sort: { 'createdAt': -1 } }
+            );
+        }
+        catch (err) {
+            logger.error("JobId: " + jobId + " Saving Training log failed", { error: err });
+        }
 
         if(remoteDetails.aws_spot_request_id !== null && 
            remoteDetails.aws_spot_request_id !== undefined && 
